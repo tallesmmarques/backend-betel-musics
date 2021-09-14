@@ -1,7 +1,7 @@
 require("dotenv")
 module.exports = {
   "type": "postgres",
-  "host": process.env.DATABASE_URL,
+  "host": process.env.HOST,
   "port": process.env.PORTDATA,
   "username": process.env.USERDATA,
   "password": process.env.PASSWORD,
