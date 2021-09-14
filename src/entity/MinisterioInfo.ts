@@ -20,10 +20,11 @@ export class MinisterioInfo {
   music: Music
 
   @Column({
-    length: 5
+    length: 5,
+    nullable: true
   })
   tom: string
 
-  @Column({ type: "date", default: "NOW()" })
+  @Column({ type: "date", nullable: true })
   lastPlayed: Date
 }
