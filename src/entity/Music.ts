@@ -16,6 +16,11 @@ export class Music {
   })
   author: string
 
+  @Column({
+    length: 100
+  })
+  gender: string
+
   @OneToMany(() => MinisterioInfo, ministerioInfo => ministerioInfo.music, {
     cascade: true
   })
