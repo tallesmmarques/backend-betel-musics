@@ -8,8 +8,11 @@ module.exports = {
   // "password": process.env.PASSWORD,
   // "database": process.env.DATABASE,
   synchronize: true,
+  ssl: true,
   extra: {
-    ssl: true
+    ssl: {
+      rejectUnauthorized: false
+    }
   },
   entities: [
     "dist/entity/**/*.js"
