@@ -34,12 +34,13 @@ var MinisterioInfo = /** @class */ (function () {
     ], MinisterioInfo.prototype, "music", void 0);
     __decorate([
         (0, typeorm_1.Column)({
-            length: 5
+            length: 5,
+            nullable: true
         }),
         __metadata("design:type", String)
     ], MinisterioInfo.prototype, "tom", void 0);
     __decorate([
-        (0, typeorm_1.Column)({ type: "date", default: "NOW()" }),
+        (0, typeorm_1.Column)({ type: "date", nullable: true }),
         __metadata("design:type", Date)
     ], MinisterioInfo.prototype, "lastPlayed", void 0);
     MinisterioInfo = __decorate([
