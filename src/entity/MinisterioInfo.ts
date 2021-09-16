@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Music } from "./Music";
 
-export type MinisterioType = "sdn-alber" | "sdn-lucimeire" | "adolescentes"
+export type MinisterioType = "sdn-alber" | "sdn-lucy" | "adolescentes"
 
 @Entity()
 export class MinisterioInfo {
@@ -10,7 +10,7 @@ export class MinisterioInfo {
 
   @Column({
     type: "enum",
-    enum: ["sdn-alber", "sdn-lucimeire", "adolescentes"]
+    enum: ["sdn-alber", "sdn-lucy", "adolescentes"]
   })
   ministerio: MinisterioType
 
