@@ -8,7 +8,10 @@ const router = Router()
 router.get("/", async (_, res) => {
   const musicRepository = getManager().getRepository(Music)
   await musicRepository.find({
-    relations: ["ministeriosInfo"]
+    relations: ["ministeriosInfo"],
+    order: {
+      name: "ASC"
+    }
   }).then(async music => {
     res.status(200).json(music)
   }).catch(err => res.status(400).json({ err }))

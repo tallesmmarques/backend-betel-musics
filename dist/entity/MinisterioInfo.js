@@ -21,8 +21,7 @@ var MinisterioInfo = /** @class */ (function () {
     ], MinisterioInfo.prototype, "id", void 0);
     __decorate([
         (0, typeorm_1.Column)({
-            type: "enum",
-            enum: ["sdn-alber", "sdn-lucy", "adolescentes"]
+            length: 100
         }),
         __metadata("design:type", String)
     ], MinisterioInfo.prototype, "ministerio", void 0);

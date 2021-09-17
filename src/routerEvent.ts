@@ -7,7 +7,10 @@ const router = Router()
 router.get("/", async (_, res) => {
   const eventRepository = getManager().getRepository(Event)
   await eventRepository.find({
-    relations: ["musics", "musics.ministeriosInfo"]
+    relations: ["musics", "musics.ministeriosInfo"],
+    order: {
+      ministerio: "ASC"
+    }
   }).then(async event => {
     res.status(200).json(event)
   }).catch(err => res.status(400).json({ err }))
