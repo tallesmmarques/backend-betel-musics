@@ -16,6 +16,15 @@ router.get("/", async (_, res) => {
   }).catch(err => res.status(400).json({ err }))
 })
 
+router.get("/:id", async (req: Request<{ id: number }, any, Event>, res) => {
+  const eventRepository = getManager().getRepository(Event)
+  await eventRepository.findOneOrFail(req.params.id, {
+    relations: ["musics", "musics.ministeriosInfo"],
+  }).then(async event => {
+    res.status(200).json(event)
+  }).catch(err => res.status(400).json({ err }))
+})
+
 router.post("/", async (req: Request<any, any, Event>, res) => {
   const eventRepository = getManager().getRepository(Event)
   const event = req.body
