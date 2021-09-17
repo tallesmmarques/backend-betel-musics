@@ -41,7 +41,7 @@ var express = require("express");
 var cors = require("cors");
 var dotenv = require("dotenv");
 var typeorm_1 = require("typeorm");
-var router_1 = require("./router");
+var routerMusic_1 = require("./routerMusic");
 dotenv.config({ path: __dirname + '/../.env' });
 (0, typeorm_1.createConnection)().then(function () { return __awaiter(void 0, void 0, void 0, function () {
     var app, port;
@@ -49,7 +49,7 @@ dotenv.config({ path: __dirname + '/../.env' });
         app = express();
         app.use(cors());
         app.use(express.json());
-        app.use("/", router_1.router);
+        app.use("/", routerMusic_1.default);
         port = process.env.PORT || 8080;
         app.listen(port, function () {
             console.log("App is running in port " + port);

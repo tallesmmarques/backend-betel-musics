@@ -1,18 +1,15 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Music } from "./Music";
 
-export type MinisterioType = "sdn-alber" | "sdn-lucy" | "adolescentes"
-
 @Entity()
 export class MinisterioInfo {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column({
-    type: "enum",
-    enum: ["sdn-alber", "sdn-lucy", "adolescentes"]
+    length: 100
   })
-  ministerio: MinisterioType
+  ministerio: string
 
   @ManyToOne(() => Music, music => music.ministeriosInfo, {
     onDelete: "CASCADE"

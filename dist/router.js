@@ -69,15 +69,22 @@ router.get("/", function (_, res) {
     });
 });
 router.get("/music", function (_, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var musicRepository, musics;
+    var musicRepository;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 musicRepository = (0, typeorm_1.getManager)().getRepository(Music_1.Music);
-                return [4 /*yield*/, musicRepository.find({ relations: ["ministeriosInfo"] })];
+                return [4 /*yield*/, musicRepository.findOneOrFail({
+                        relations: ["ministeriosInfo"]
+                    }).then(function (music) { return __awaiter(void 0, void 0, void 0, function () {
+                        return __generator(this, function (_a) {
+                            res.status(200).json(music);
+                            return [2 /*return*/];
+                        });
+                    }); }).catch(function (err) { return res.status(400).json({ err: err }); })];
             case 1:
-                musics = _a.sent();
-                return [2 /*return*/, res.status(200).json(musics)];
+                _a.sent();
+                return [2 /*return*/];
         }
     });
 }); });

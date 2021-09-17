@@ -15,7 +15,8 @@ module.exports = {
     }
   },
   entities: [
-    "dist/entity/**/*.js"
+    // "dist/entity/**/*.js"
+    "src/entity/**/*.ts"
   ],
   migrations: [
     "dist/migration/**/*.js"

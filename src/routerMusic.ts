@@ -1,23 +1,20 @@
 import { Router, Request } from "express";
 import { getManager } from "typeorm";
 import { Music } from "./entity/Music";
-import { MinisterioInfo, MinisterioType } from "./entity/MinisterioInfo";
+import { MinisterioInfo } from "./entity/MinisterioInfo";
 
 const router = Router()
 
-router.get("/", (_, res) => {
-  return res.json({
-    message: "Betel Musics API"
-  })
-})
-
-router.get("/music", async (_, res) => {
+router.get("/", async (_, res) => {
   const musicRepository = getManager().getRepository(Music)
-  const musics = await musicRepository.find({ relations: ["ministeriosInfo"] })
-  return res.status(200).json(musics)
+  await musicRepository.find({
+    relations: ["ministeriosInfo"]
+  }).then(async music => {
+    res.status(200).json(music)
+  }).catch(err => res.status(400).json({ err }))
 })
 
-router.get("/music/:id", async (req: Request<{ id: number }, any, Music>, res) => {
+router.get("/:id", async (req: Request<{ id: number }, any, Music>, res) => {
   const musicRepository = getManager().getRepository(Music)
   await musicRepository.findOneOrFail(req.params.id, {
     relations: ["ministeriosInfo"]
@@ -26,7 +23,7 @@ router.get("/music/:id", async (req: Request<{ id: number }, any, Music>, res) =
   }).catch(err => res.status(400).json({ err }))
 })
 
-router.post("/music", async (req: Request<any, any, Music>, res) => {
+router.post("/", async (req: Request<any, any, Music>, res) => {
   const musicRepository = getManager().getRepository(Music)
   const music = req.body
 
@@ -37,7 +34,7 @@ router.post("/music", async (req: Request<any, any, Music>, res) => {
   })
 })
 
-router.put("/music/:id", async (req: Request<{ id: number }, any, Music>, res) => {
+router.put("/:id", async (req: Request<{ id: number }, any, Music>, res) => {
   const musicRepository = getManager().getRepository(Music)
   await musicRepository.findOneOrFail(req.params.id, {
     relations: ["ministeriosInfo"]
@@ -54,23 +51,9 @@ router.put("/music/:id", async (req: Request<{ id: number }, any, Music>, res) =
   }).catch(err => res.status(400).json(err))
 })
 
-router.put("/minist/:id", async (req: Request<{ id: number }, any, MinisterioInfo>, res) => {
-  const ministerioRepository = getManager().getRepository(MinisterioInfo)
-  await ministerioRepository.findOneOrFail(req.params.id).then(async minist => {
-    await ministerioRepository.save({
-      ...req.body,
-      id: minist.id,
-    }).then(minist => {
-      return res.status(200).json(minist)
-    }).catch(err => {
-      return res.status(400).json({ error: true, message: err })
-    })
-  }).catch(err => res.status(400).json(err))
-})
-
-router.put("/music/:id/:ministName", async (req: Request<{ id: number, ministName: MinisterioType }, any, MinisterioInfo>, res) => {
+router.put("/:id/:ministName", async (req: Request<{ id: number, ministName: string }, any, MinisterioInfo>, res) => {
   const musicRepository = getManager().getRepository(Music)
-  const music = await musicRepository.findOneOrFail(req.params.id, {
+  await musicRepository.findOneOrFail(req.params.id, {
     relations: ["ministeriosInfo"]
   }).then(async music => {
     const minists = music.ministeriosInfo
@@ -102,7 +85,7 @@ router.put("/music/:id/:ministName", async (req: Request<{ id: number, ministNam
   }).catch(err => res.status(400).json({ message: "Esta música é inválida", err }))
 })
 
-router.delete("/music/:id", async (req: Request<{ id: number }, any, Music>, res) => {
+router.delete("/:id", async (req: Request<{ id: number }, any, Music>, res) => {
   const musicRepository = getManager().getRepository(Music)
   await musicRepository.findOneOrFail(req.params.id).then(async music => {
     await musicRepository.remove(music).then(music => {
@@ -112,4 +95,6 @@ router.delete("/music/:id", async (req: Request<{ id: number }, any, Music>, res
     })
   }).catch(err => res.status(400).json(err))
 })
-export { router }
+
+export default router
+
