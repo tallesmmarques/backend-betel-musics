@@ -2,13 +2,12 @@ import { Router } from "express";
 import * as puppeteer from "puppeteer"
 
 const router = Router()
-puppeteer.launch({ args: ["--no-sandbox"] }).then(browser => {
+puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox', '--ignore-certificate-errors'] }).then(browser => {
 
   router.get("/", async (req, res) => {
     const searchString = req.query.search
     const urlMusic = "https://www.cifraclub.com.br/?q=" + searchString
 
-    // const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
     const page = await browser.newPage();
     await page.goto(urlMusic);
 
@@ -28,14 +27,12 @@ puppeteer.launch({ args: ["--no-sandbox"] }).then(browser => {
       return results.slice(0, 5)
     });
 
-    await browser.close();
     return res.status(200).send(data)
   })
 
   router.get("/music/", async (req, res) => {
-    const authorLink = req.query.author
-    const nameLink = req.query.name
-    const urlMusic = `https://www.cifraclub.com.br/${authorLink}/${nameLink}`
+    const path = req.query.path
+    const urlMusic = "https://www.cifraclub.com.br" + path
 
     const page = await browser.newPage();
     await page.goto(urlMusic);
@@ -54,7 +51,6 @@ puppeteer.launch({ args: ["--no-sandbox"] }).then(browser => {
       })
     });
 
-    await browser.close();
     return res.status(200).send(data)
   })
 
