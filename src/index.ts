@@ -3,8 +3,10 @@ import * as express from "express";
 import * as cors from "cors";
 import * as dotenv from "dotenv";
 import { createConnection } from "typeorm";
+
 import routerMusic from "./routerMusic";
 import routerEvent from "./routerEvent";
+import routerCifra from "./routerCifra";
 
 dotenv.config({ path: __dirname + '/../.env' });
 
@@ -21,6 +23,7 @@ createConnection().then(async () => {
 
   app.use("/music", routerMusic);
   app.use("/event", routerEvent);
+  app.use("/cifra", routerCifra);
 
   const port = process.env.PORT || 8080;
   app.listen(port, () => {
