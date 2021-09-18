@@ -43,6 +43,7 @@ var dotenv = require("dotenv");
 var typeorm_1 = require("typeorm");
 var routerMusic_1 = require("./routerMusic");
 var routerEvent_1 = require("./routerEvent");
+var routerCifra_1 = require("./routerCifra");
 dotenv.config({ path: __dirname + '/../.env' });
 (0, typeorm_1.createConnection)().then(function () { return __awaiter(void 0, void 0, void 0, function () {
     var app, port;
@@ -57,6 +58,7 @@ dotenv.config({ path: __dirname + '/../.env' });
         });
         app.use("/music", routerMusic_1.default);
         app.use("/event", routerEvent_1.default);
+        app.use("/cifra", routerCifra_1.default);
         port = process.env.PORT || 8080;
         app.listen(port, function () {
             console.log("App is running in port " + port);
