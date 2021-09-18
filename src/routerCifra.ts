@@ -7,7 +7,7 @@ router.get("/", async (req, res) => {
   const searchString = req.query.search
   const urlMusic = "https://www.cifraclub.com.br/?q=" + searchString
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
   await page.goto(urlMusic);
 
@@ -36,7 +36,7 @@ router.get("/music/", async (req, res) => {
   const nameLink = req.query.name
   const urlMusic = `https://www.cifraclub.com.br/${authorLink}/${nameLink}`
 
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
   await page.goto(urlMusic);
 
